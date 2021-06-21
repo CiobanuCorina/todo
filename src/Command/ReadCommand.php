@@ -12,13 +12,6 @@ class ReadCommand extends Command
 {
     protected static $defaultName = 'read';
 
-    /**
-     * @return void
-     */
-    protected function configure()
-    {
-        $this->addOption('stop-on-fail');
-    }
 
     /**
      * @param InputInterface $input

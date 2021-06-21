@@ -26,8 +26,5 @@ function getFilePath($helper, InputInterface $input, OutputInterface $output, st
 function fileNotFound($helper, InputInterface $input, OutputInterface $output): int
 {
     $helper->ask($input, $output, new ConfirmationQuestion("This file does not exist [Enter]"));
-    if ($input->hasOption('stop-on-fail')) {
-        return Command::FAILURE;
-    }
-    return Command::SUCCESS;
+    return Command::FAILURE;
 }

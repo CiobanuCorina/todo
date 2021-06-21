@@ -10,13 +10,6 @@ class DeleteCommand extends Command
 {
     protected static $defaultName = 'delete';
 
-    /**
-     * @return void
-     */
-    protected function configure()
-    {
-        $this->addOption('stop-on-fail');
-    }
 
     /**
      * @param InputInterface $input

@@ -15,13 +15,6 @@ class EditCommand extends Command
 {
     protected static $defaultName = 'edit';
 
-    /**
-     * @return void
-     */
-    protected function configure()
-    {
-        $this->addOption('stop-on-fail');
-    }
 
     /**
      * @param InputInterface $input
