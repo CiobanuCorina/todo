@@ -1,0 +1,7 @@
+{
+  "main": "todo.php",
+  "output": "out/todo.phar",
+  "blacklist": [
+    "out/"
+  ]
+}

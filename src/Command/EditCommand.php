@@ -1,13 +1,12 @@
 <?php
 
-namespace Todo\Command;
+namespace ToDo\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use ToDo\ToDoLoader;
@@ -48,7 +47,7 @@ class EditCommand extends Command
         $content = $helper->ask($input, $output, $question);
         $todo->setTitle($title);
         $todo->setContent($content);
-        $serializer = new Serializer([new ArrayDenormalizer(), new ObjectNormalizer()], [new YamlEncoder()]);
+        $serializer = new Serializer([new ObjectNormalizer()], [new YamlEncoder()]);
         $serializedTodo = $serializer->serialize(
             $todo,
             'yaml',

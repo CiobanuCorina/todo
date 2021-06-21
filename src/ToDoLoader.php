@@ -4,7 +4,6 @@ namespace ToDo;
 
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -14,7 +13,7 @@ class ToDoLoader
 
     public function __construct()
     {
-        $this->serializer = new Serializer([new ArrayDenormalizer(), new ObjectNormalizer()], [new YamlEncoder()]);
+        $this->serializer = new Serializer([new ObjectNormalizer()], [new YamlEncoder()]);
     }
 
     public function load(string $file): ToDo
