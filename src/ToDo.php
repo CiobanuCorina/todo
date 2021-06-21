@@ -1,8 +1,6 @@
 <?php
 
-
 namespace ToDo;
-
 
 class ToDo
 {
@@ -10,13 +8,7 @@ class ToDo
     protected string $content;
     protected string $createdAt;
 
-    /**
-     * @return string
-     */
-    public function getCreatedAt(): string
-    {
-        return $this->createdAt;
-    }
+
 
     /**
      * @param string $createdAt

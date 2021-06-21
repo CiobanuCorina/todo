@@ -16,5 +16,9 @@
         "psr-4": {
             "ToDo\\": "src"
         }
+    },
+    "require-dev": {
+        "vimeo/psalm": "^4.8",
+        "phpmd/phpmd": "^2.10"
     }
 }

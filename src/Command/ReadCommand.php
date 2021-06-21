@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Todo\Command;
-
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,18 +12,23 @@ class ReadCommand extends Command
 {
     protected static $defaultName = 'read';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->addOption('stop-on-fail');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
         $todo = $this->chooseTodo($helper, $input, $output);
-        if(!$todo){
-            fileNotFound($helper, $input, $output);
-        }
         $output->writeln("<info>Title: </info>".$todo->getTitle());
         $output->writeln("<info>Content: </info>".PHP_EOL.$todo->getContent());
         return Command::SUCCESS;

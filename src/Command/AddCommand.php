@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Todo\Command;
-
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,6 +23,11 @@ class AddCommand extends Command
             ->setHelp('This command allows to create a new todo and store it in the storage folder');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([
@@ -43,16 +46,21 @@ class AddCommand extends Command
         $todo->setContent($content);
         $todo->setCreatedAt(date('Y-m-d H:i:s'));
         $serializer = new Serializer([new ArrayDenormalizer(), new ObjectNormalizer()], [new YamlEncoder()]);
-        $serializedTodo = $serializer->serialize($todo, 'yaml',
-        [
+        $serializedTodo = $serializer->serialize(
+            $todo,
+            'yaml',
+            [
             'yaml_inline'=>3
-        ]);
+        ]
+        );
         $title = $title.Uuid::v4();
         $question = new Question('Enter the name of the file:', strtolower("{$title}.yaml"));
         $fileName = $helper->ask($input, $output, $question);
+        if(!strrpos($fileName, '.yaml')){
+            $fileName = $fileName.'.yaml';
+        }
         file_put_contents(getcwd().'/storage/'.$fileName, $serializedTodo);
         $output->writeln("<info>Todo was saved</info>");
         return Command::SUCCESS;
     }
-
 }

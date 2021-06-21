@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Todo\Command;
-
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,16 +12,23 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use ToDo\ToDoLoader;
 
-
 class EditCommand extends Command
 {
     protected static $defaultName = 'edit';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->addOption('stop-on-fail');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([
@@ -44,16 +49,17 @@ class EditCommand extends Command
         $todo->setTitle($title);
         $todo->setContent($content);
         $serializer = new Serializer([new ArrayDenormalizer(), new ObjectNormalizer()], [new YamlEncoder()]);
-        $serializedTodo = $serializer->serialize($todo, 'yaml',
+        $serializedTodo = $serializer->serialize(
+            $todo,
+            'yaml',
             [
                 'yaml_inline'=>3
-            ]);
-        if($filePath){
-            file_put_contents($filePath, $serializedTodo);
-        }
-        else{
+            ]
+        );
+        if (!$filePath) {
             fileNotFound($helper, $input, $output);
         }
+        file_put_contents($filePath, $serializedTodo);
         $output->writeln("<info>Todo was edited</info>");
         return Command::SUCCESS;
     }
