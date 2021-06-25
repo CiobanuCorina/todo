@@ -5,8 +5,9 @@ namespace ToDo\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
-class DeleteCommand extends Command
+class DeleteCommand extends GeneralCommand
 {
     protected static $defaultName = 'delete';
 
@@ -24,9 +25,9 @@ class DeleteCommand extends Command
             '',
         ]);
         $helper = $this->getHelper('question');
-        $file = getFilePath($helper, $input, $output, 'Which todo should be deleted:');
+        $file = parent::getFilePath($helper, $input, $output, 'Which todo should be deleted:');
         if (!unlink($file)) {
-            fileNotFound($helper, $input, $output);
+            throw new FileNotFoundException();
         }
         $output->writeln("<info>Todo successfully deleted</info>");
         return Command::SUCCESS;

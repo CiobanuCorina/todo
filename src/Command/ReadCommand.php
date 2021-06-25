@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use ToDo\ToDo;
 use ToDo\ToDoLoader;
 
-class ReadCommand extends Command
+class ReadCommand extends GeneralCommand
 {
     protected static $defaultName = 'read';
 
@@ -30,7 +30,7 @@ class ReadCommand extends Command
     protected function chooseTodo($helper, InputInterface $input, OutputInterface $output): ToDo
     {
         $loader = new ToDoLoader();
-        $filePath = getFilePath($helper, $input, $output, 'Which todo you want to view:');
+        $filePath = parent::getFilePath($helper, $input, $output, 'Which todo you want to view:');
 
         return $loader->load($filePath);
     }

@@ -5,14 +5,13 @@ namespace ToDo\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Uid\Uuid;
 use ToDo\ToDo;
 
-class AddCommand extends Command
+class AddCommand extends GeneralCommand
 {
     protected static $defaultName = 'add';
 
@@ -36,11 +35,13 @@ class AddCommand extends Command
         ]);
         $todo = new ToDo();
         $helper = $this->getHelper('question');
-        $question = new Question("<info>Enter the title of your new todo:</info><comment>[title]</comment>", 'title');
-        $title = $helper->ask($input, $output, $question);
-        $question = new Question('<info>Enter text for todo (Terminate with Ctrl-D or Ctrl-Z):</info>');
-        $question->setMultiline(true);
-        $content = $helper->ask($input, $output, $question);
+        $title = parent::ask($helper, $input, $output,
+            "<info>Enter the title of your new todo:</info><comment>[title]</comment>",
+            'title');
+        $content = parent::ask($helper, $input, $output,
+            '<info>Enter text for todo (Terminate with Ctrl-D or Ctrl-Z):</info>',
+        null,
+        true);
         $todo->setTitle($title);
         $todo->setContent($content);
         $todo->setCreatedAt(date('Y-m-d H:i:s'));
@@ -53,8 +54,9 @@ class AddCommand extends Command
         ]
         );
         $title .= Uuid::v4();
-        $question = new Question('Enter the name of the file:', strtolower("{$title}.yaml"));
-        $fileName = $helper->ask($input, $output, $question);
+        $fileName = parent::ask($helper, $input, $output,
+            '<info>Enter the name of the file:</info>',
+            strtolower("{$title}.yaml"));
         if(!strrpos($fileName, '.yaml')){
             $fileName = $fileName.'.yaml';
         }

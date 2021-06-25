@@ -13,4 +13,8 @@ $application->add(new \ToDo\Command\EditCommand());
 $application->add(new \ToDo\Command\DeleteCommand());
 $application->add(new \ToDo\Command\ReadCommand());
 
-$application->run();
+try {
+    $application->run();
+} catch (Exception $e) {
+    print $e->getMessage();
+}

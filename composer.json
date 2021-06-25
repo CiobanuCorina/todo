@@ -10,9 +10,6 @@
         "symfony/finder": "^5.3"
     },
     "autoload": {
-        "files": [
-            "helpers/functions.php"
-        ],
         "psr-4": {
             "ToDo\\": "src"
         }
